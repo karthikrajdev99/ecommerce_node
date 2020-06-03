@@ -11,6 +11,19 @@
   "dependencies": {
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
-    "mongoose": "^5.9.17"
+    "mongoose": "^5.9.17",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express-jwt": "^5.3.3",
+    "formidable": "^1.2.2",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.26.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.4",
+    "stripe": "^8.56.0",
+    "uuidv1": "^1.6.14"
   }
 }

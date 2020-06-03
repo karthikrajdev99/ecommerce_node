@@ -12,6 +12,7 @@ exports.categoryById = (req, res, next, id) => {
         req.category = category;
         next();
     });
+    
 };
 
 exports.create = (req, res) => {
