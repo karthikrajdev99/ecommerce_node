@@ -1,10 +1,9 @@
-const formidable = require('formidable');
-const _ = require('lodash');
-const fs = require('fs');
+const mongoose = require("mongoose");
 const Product = require('../models/product');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
-exports.productById = (req, res, next, id) => {
+exports.productById = (req, res, next) => {
+    const id = mongoose.Types.ObjectId(req.body._id);
     Product.findById(id)
         .populate('category')
         .exec((err, product) => {
@@ -19,55 +18,21 @@ exports.productById = (req, res, next, id) => {
 };
 
 exports.read = (req, res) => {
-    req.product.photo = undefined;
     return res.json(req.product);
 };
 
 exports.create = (req, res) => {
-    let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
-    form.parse(req, (err, fields, files) => {
+    const product = new Product(req.body);
+    product.save((err, data) => {
         if (err) {
             return res.status(400).json({
-                error: 'Image could not be uploaded'
+                error: errorHandler(err)
             });
         }
-        // check for all fields
-        const { name, description, price, category, quantity, shipping } = fields;
-
-        if (!name || !description || !price || !category || !quantity || !shipping) {
-            return res.status(400).json({
-                error: 'All fields are required'
-            });
-        }
-
-        let product = new Product(fields);
-
-        // 1kb = 1000
-        // 1mb = 1000000
-
-        if (files.photo) {
-            // console.log("FILES PHOTO: ", files.photo);
-            if (files.photo.size > 1000000) {
-                return res.status(400).json({
-                    error: 'Image should be less than 1mb in size'
-                });
-            }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.type;
-        }
-
-        product.save((err, result) => {
-            if (err) {
-                console.log('PRODUCT CREATE ERROR ', err);
-                return res.status(400).json({
-                    error: errorHandler(err)
-                });
-            }
-            res.json(result);
-        });
+        res.json({ data });
     });
-};
+}
+
 
 exports.remove = (req, res) => {
     let product = req.product;
@@ -79,44 +44,6 @@ exports.remove = (req, res) => {
         }
         res.json({
             message: 'Product deleted successfully'
-        });
-    });
-};
-
-exports.update = (req, res) => {
-    let form = new formidable.IncomingForm();
-    form.keepExtensions = true;
-    form.parse(req, (err, fields, files) => {
-        if (err) {
-            return res.status(400).json({
-                error: 'Image could not be uploaded'
-            });
-        }
-
-        let product = req.product;
-        product = _.extend(product, fields);
-
-        // 1kb = 1000
-        // 1mb = 1000000
-
-        if (files.photo) {
-            // console.log("FILES PHOTO: ", files.photo);
-            if (files.photo.size > 1000000) {
-                return res.status(400).json({
-                    error: 'Image should be less than 1mb in size'
-                });
-            }
-            product.photo.data = fs.readFileSync(files.photo.path);
-            product.photo.contentType = files.photo.type;
-        }
-
-        product.save((err, result) => {
-            if (err) {
-                return res.status(400).json({
-                    error: errorHandler(err)
-                });
-            }
-            res.json(result);
         });
     });
 };
@@ -134,7 +61,6 @@ exports.list = (req, res) => {
     let limit = req.query.limit ? parseInt(req.query.limit) : 6;
 
     Product.find()
-        .select('-photo')
         .populate('category')
         .sort([[sortBy, order]])
         .limit(limit)
@@ -214,7 +140,6 @@ exports.listBySearch = (req, res) => {
     }
 
     Product.find(findArgs)
-        .select('-photo')
         .populate('category')
         .sort([[sortBy, order]])
         .skip(skip)

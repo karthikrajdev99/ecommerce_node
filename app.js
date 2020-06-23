@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env'});
@@ -30,7 +29,6 @@ mongoose
 // middlewares
 app.use(morgan('dev'));
 app.use(bodyParser.json());
-app.use(cookieParser());
 app.use(cors());
 
 // routes middleware

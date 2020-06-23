@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
-const { requireSignin, isAuth, isAdmin } = require("../controllers/auth");
+const auth = require('../helpers/auth')
+const { isAdmin } = require("../controllers/auth");
 const { userById, addOrderToUserHistory } = require("../controllers/user");
 const {
     create,
@@ -13,31 +14,28 @@ const {
 const { decreaseQuantity } = require("../controllers/product");
 
 router.post(
-    "/order/create/:userId",
-    requireSignin,
-    isAuth,
+    "/order/create",
+    auth,
     addOrderToUserHistory,
     decreaseQuantity,
     create
 );
 
-router.get("/order/list/:userId", requireSignin, isAuth, isAdmin, listOrders);
+router.get("/order/list", auth, isAdmin, listOrders);
 router.get(
-    "/order/status-values/:userId",
-    requireSignin,
-    isAuth,
+    "/order/status-values",
+    auth,
     isAdmin,
     getStatusValues
 );
 router.put(
-    "/order/:orderId/status/:userId",
-    requireSignin,
-    isAuth,
+    "/order/:orderId/status",
+    orderById,
+    auth,
     isAdmin,
     updateOrderStatus
 );
 
-router.param("userId", userById);
 router.param("orderId", orderById);
 
 module.exports = router;

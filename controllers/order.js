@@ -1,8 +1,10 @@
 const { Order } = require('../models/order');
+const mongoose = require("mongoose");
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
 
-exports.orderById = (req, res, next, id) => {
+exports.orderById = (req, res, next) => {
+    const id = mongoose.Types.ObjectId(req.body._id);
     Order.findById(id)
         .populate('products.product', 'name price')
         .exec((err, order) => {
@@ -18,7 +20,7 @@ exports.orderById = (req, res, next, id) => {
 
 exports.create = (req, res) => {
     console.log('CREATE ORDER: ', req.body);
-    req.body.order.user = req.profile;
+    req.body.order.user = req.user;
     const order = new Order(req.body.order);
     order.save((error, data) => {
         if (error) {

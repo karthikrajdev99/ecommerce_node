@@ -1,8 +1,10 @@
 const Category = require('../models/category');
 const Product = require('../models/product');
+const mongoose = require("mongoose");
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
-exports.categoryById = (req, res, next, id) => {
+exports.categoryById = (req, res, next) => {
+    const id = mongoose.Types.ObjectId(req.body._id);
     Category.findById(id).exec((err, category) => {
         if (err || !category) {
             return res.status(400).json({
@@ -33,7 +35,7 @@ exports.read = (req, res) => {
 
 exports.update = (req, res) => {
     console.log('req.body', req.body);
-    console.log('category update param', req.params.categoryId);
+    // console.log('category update param', req.params.categoryId);
 
     const category = req.category;
     category.name = req.body.name;

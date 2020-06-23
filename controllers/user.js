@@ -1,23 +1,26 @@
 const User = require('../models/user');
 const { Order } = require('../models/order');
+const mongoose = require("mongoose");
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
-exports.userById = (req, res, next, id) => {
-    User.findById(id).exec((err, user) => {
-        if (err || !user) {
-            return res.status(400).json({
-                error: 'User not found'
-            });
-        }
-        req.profile = user;
-        next();
-    });
-};
+// exports.userById = (req, res, next) => {
+
+//     const id = mongoose.Types.ObjectId(req.body._id);
+//     User.findById(id).exec((err, user) => {
+//         if (err || !user) {
+//             console.log(err)
+//             return res.status(400).json({
+//                 error: 'User not found'
+//             });
+//         }
+//         req.profile = user;
+//         next();
+//     });
+// };
 
 exports.read = (req, res) => {
-    req.profile.hashed_password = undefined;
-    req.profile.salt = undefined;
-    return res.json(req.profile);
+    req.user.password = undefined;
+    return res.json(req.user);
 };
 
 
@@ -25,7 +28,7 @@ exports.update = (req, res) => {
 
     const { name, password } = req.body;
 
-    User.findOne({ _id: req.profile._id }, (err, user) => {
+    User.findOne({ _id: req.user._id }, (err, user) => {
         if (err || !user) {
             return res.status(400).json({
                 error: 'User not found'
@@ -56,8 +59,6 @@ exports.update = (req, res) => {
                     error: 'User update failed'
                 });
             }
-            updatedUser.hashed_password = undefined;
-            updatedUser.salt = undefined;
             res.json(updatedUser);
         });
     });
@@ -78,7 +79,7 @@ exports.addOrderToUserHistory = (req, res, next) => {
         });
     });
 
-    User.findOneAndUpdate({ _id: req.profile._id }, { $push: { history: history } }, { new: true }, (error, data) => {
+    User.findOneAndUpdate({ _id: req.user._id }, { $push: { history: history } }, { new: true }, (error, data) => {
         if (error) {
             return res.status(400).json({
                 error: 'Could not update user purchase history'
@@ -89,7 +90,7 @@ exports.addOrderToUserHistory = (req, res, next) => {
 };
 
 exports.purchaseHistory = (req, res) => {
-    Order.find({ user: req.profile._id })
+    Order.find({ user: req.user._id })
         .populate('user', '_id name')
         .sort('-created')
         .exec((err, orders) => {

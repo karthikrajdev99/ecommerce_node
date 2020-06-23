@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
-const uuidv1 = require('uuidv1')
+const bcrypt = require('bcryptjs');
+const dotenv = require('dotenv');
+const jwt = require("jsonwebtoken");
+dotenv.config({ path: './config.env'});
 
 const userSchema = new mongoose.Schema(
     {
@@ -16,7 +18,7 @@ const userSchema = new mongoose.Schema(
             required: true,
             unique: true
         },
-        hashed_password: {
+        password: {
             type: String,
             required: true
         },
@@ -24,7 +26,6 @@ const userSchema = new mongoose.Schema(
             type: String,
             trim: true
         },
-        salt: String,
         role: {
             type: Number,
             default: 0
@@ -32,39 +33,40 @@ const userSchema = new mongoose.Schema(
         history: {
             type: Array,
             default: []
-        }
+        },  
+        tokens: [{
+            token: {
+                type: String,
+                required: true
+            }
+        }]
     },
     { timestamps: true }
 );
 
-// virtual field
-userSchema
-    .virtual('password')
-    .set(function(password) {
-        this._password = password;
-        this.salt = uuidv1();
-        this.hashed_password = this.encryptPassword(password);
-    })
-    .get(function() {
-        return this._password;
-    });
+userSchema.methods.generateAuthToken = async function () {
+    const user = this
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
+    
 
-userSchema.methods = {
-    authenticate: function(plainText) {
-        return this.encryptPassword(plainText) === this.hashed_password;
-    },
+    //   you need to modify this to work with your current schema ! got it, compare and make it work
+    user.tokens = user.tokens.concat({ token })
 
-    encryptPassword: function(password) {
-        if (!password) return '';
-        try {
-            return crypto
-                .createHmac('sha1', this.salt)
-                .update(password)
-                .digest('hex');
-        } catch (err) {
-            return '';
-        }
+    await user.save()
+    
+    return token
     }
-};
+
+// Hash the plain text password before saving
+userSchema.pre('save', async function (next) {
+    const user = this
+
+    if (user.isModified('password')) {
+        user.password = await bcrypt.hash(user.password, 8)
+    }
+
+    next()
+})
+
 
 module.exports = mongoose.model('User', userSchema);
