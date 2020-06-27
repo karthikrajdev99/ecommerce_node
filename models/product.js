@@ -33,7 +33,7 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     photo: {
-      image_url: String,
+      imageUrl: String,
     },
     shipping: {
       required: false,

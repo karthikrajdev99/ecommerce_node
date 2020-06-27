@@ -6,7 +6,6 @@ const {
     productById,
     read,
     remove,
-    update,
     list,
     listRelated,
     listCategories,
