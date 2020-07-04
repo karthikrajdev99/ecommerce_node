@@ -1,10 +1,8 @@
-const mongoose = require("mongoose");
 const Product = require('../models/product');
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.productById = (req, res, next) => {
-    const id = mongoose.Types.ObjectId(req.body._id);
-    Product.findById(id)
+    Product.findById(req.params.productId)
         .populate('category')
         .exec((err, product) => {
             if (err || !product) {
@@ -157,12 +155,8 @@ exports.listBySearch = (req, res) => {
         });
 };
 
-exports.photo = (req, res, next) => {
-    if (req.product.photo.data) {
-        res.set('Content-Type', req.product.photo.contentType);
-        return res.send(req.product.photo.data);
-    }
-    next();
+exports.photo = (req, res) => {
+    res.send(req.product.photo.imageUrl);
 };
 
 exports.listSearch = (req, res) => {

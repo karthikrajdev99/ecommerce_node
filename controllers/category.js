@@ -1,11 +1,10 @@
 const Category = require('../models/category');
 const Product = require('../models/product');
-const mongoose = require("mongoose");
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.categoryById = (req, res, next) => {
-    const id = mongoose.Types.ObjectId(req.body._id);
-    Category.findById(id).exec((err, category) => {
+    Category.findById(req.params.categoryId).exec((err, category) => {
+        // console.log(id);
         if (err || !category) {
             return res.status(400).json({
                 error: 'Category does not exist'

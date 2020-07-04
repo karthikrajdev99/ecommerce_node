@@ -3,7 +3,7 @@ const router = express.Router();
 
 const auth = require('../helpers/auth')
 const { isAdmin } = require("../controllers/auth");
-const { userById, addOrderToUserHistory } = require("../controllers/user");
+const { addOrderToUserHistory } = require("../controllers/user");
 const {
     create,
     listOrders,
@@ -30,7 +30,6 @@ router.get(
 );
 router.put(
     "/order/:orderId/status",
-    orderById,
     auth,
     isAdmin,
     updateOrderStatus

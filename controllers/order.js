@@ -1,11 +1,9 @@
 const { Order } = require('../models/order');
-const mongoose = require("mongoose");
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
 
 exports.orderById = (req, res, next) => {
-    const id = mongoose.Types.ObjectId(req.body._id);
-    Order.findById(id)
+    Order.findById(req.params.orderId)
         .populate('products.product', 'name price')
         .exec((err, order) => {
             if (err || !order) {

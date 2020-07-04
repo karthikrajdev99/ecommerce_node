@@ -6,12 +6,12 @@ const { create, categoryById, read, update, remove, list } = require('../control
 const { isAdmin } = require('../controllers/auth');
 
 
-router.get('/category/categoryId', read);
+router.get('/category/:categoryId', read);
 router.post('/category/create', auth, isAdmin, create);
 
-router.put('/category/categoryId', auth, isAdmin, update);
+router.put('/category/:categoryId', auth, isAdmin, update);
 
-router.delete('/category/categoryId', auth, isAdmin, remove);
+router.delete('/category/:categoryId', auth, isAdmin, remove);
 router.get('/categories', list);
 
 router.param('categoryId', categoryById);
