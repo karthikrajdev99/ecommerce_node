@@ -156,7 +156,7 @@ exports.listBySearch = (req, res) => {
 };
 
 exports.photo = (req, res) => {
-    res.send(req.product.photo.imageUrl);
+    res.json(req.product.photo.imageUrl);
 };
 
 exports.listSearch = (req, res) => {
