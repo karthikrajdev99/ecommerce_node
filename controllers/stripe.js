@@ -7,7 +7,7 @@ exports.createCharge = (req, res) => {
         stripe.charges.create({
           amount: req.body.amount * 100, //amount in cents
           currency: "usd",
-          source: "tok_mastercard",
+          source: req.body.token.id,
         },
         (error, charges) => {
             if (error) {
