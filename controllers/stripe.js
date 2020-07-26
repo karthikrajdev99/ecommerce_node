@@ -9,11 +9,11 @@ exports.createCharge = (req, res) => {
           currency: "usd",
           source: req.body.token.id,
         },
-        (error, result) => {
+        (error, charges) => {
             if (error) {
                 res.status(500).json(error);
             } else {
-                res.json(result);
+                res.json(charges);
             }
         })
     }
