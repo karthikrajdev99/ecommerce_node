@@ -35,7 +35,7 @@ exports.signin = async (req, res) => {
             throw new Error('Unable to login')
         }
         const token = await user.generateAuthToken()
-        res.json({ user, isMatch, token })
+        return res.json({ user, isMatch, token })
     } catch (e) {
         res.status(400).json()
         console.log(e)
@@ -59,7 +59,7 @@ exports.signout = async (req, res) => {
             return token.token !== reqtoken
         })
         await user.save()
-        res.json()
+        return res.json()
     } catch (e) {
         res.status(500).json()
         console.log(e)

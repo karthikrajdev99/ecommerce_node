@@ -12,9 +12,9 @@ exports.createCharge = (req, res) => {
         },
         (error, charges) => {
             if (error) {
-                res.status(500).json(error);
+                return res.status(500).json(error);
             } else {
-                res.json(charges);
+                return res.json(charges);
             }
         })
     }

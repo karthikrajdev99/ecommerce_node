@@ -29,7 +29,7 @@ exports.create = (req, res) => {
         // order.address
         // order.products.length
         // order.amount
-        res.json(data);
+        return res.json(data);
     });
 };
 
@@ -43,12 +43,12 @@ exports.listOrders = (req, res) => {
                     error: errorHandler(error)
                 });
             }
-            res.json(orders);
+            return res.json(orders);
         });
 };
 
 exports.getStatusValues = (req, res) => {
-    res.json(Order.schema.path('status').enumValues);
+    return res.json(Order.schema.path('status').enumValues);
 };
 
 exports.updateOrderStatus = (req, res) => {
@@ -58,6 +58,6 @@ exports.updateOrderStatus = (req, res) => {
                 error: errorHandler(err)
             });
         }
-        res.json(order);
+        return res.json(order);
     });
 };

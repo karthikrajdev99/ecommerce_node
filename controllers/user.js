@@ -59,7 +59,7 @@ exports.update = (req, res) => {
                     error: 'User update failed'
                 });
             }
-            res.json(updatedUser);
+            return res.json(updatedUser);
         });
     });
 };
@@ -99,6 +99,6 @@ exports.purchaseHistory = (req, res) => {
                     error: errorHandler(err)
                 });
             }
-            res.json(orders);
+            return res.json(orders);
         });
 };

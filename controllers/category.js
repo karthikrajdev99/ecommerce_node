@@ -24,7 +24,7 @@ exports.create = (req, res) => {
                 error: errorHandler(err)
             });
         }
-        res.json({ data });
+        return res.json({ data });
     });
 };
 
@@ -44,7 +44,7 @@ exports.update = (req, res) => {
                 error: errorHandler(err)
             });
         }
-        res.json(data);
+        return res.json(data);
     });
 };
 
@@ -62,7 +62,7 @@ exports.remove = (req, res) => {
                         error: errorHandler(err)
                     });
                 }
-                res.json({
+                return res.json({
                     message: 'Category deleted'
                 });
             });
@@ -77,6 +77,6 @@ exports.list = (req, res) => {
                 error: errorHandler(err)
             });
         }
-        res.json(data);
+        return res.json(data);
     });
 };

@@ -27,7 +27,7 @@ exports.create = (req, res) => {
                 error: errorHandler(err)
             });
         }
-        res.json({ data });
+        return res.json({ data });
     });
 }
 
@@ -40,7 +40,7 @@ exports.remove = (req, res) => {
                 error: errorHandler(err)
             });
         }
-        res.json({
+        return res.json({
             message: 'Product deleted successfully'
         });
     });
@@ -68,7 +68,7 @@ exports.list = (req, res) => {
                     error: 'Products not found'
                 });
             }
-            res.json(products);
+            return res.json(products);
         });
 };
 
@@ -89,7 +89,7 @@ exports.listRelated = (req, res) => {
                     error: 'Products not found'
                 });
             }
-            res.json(products);
+            return res.json(products);
         });
 };
 
@@ -100,7 +100,7 @@ exports.listCategories = (req, res) => {
                 error: 'Categories not found'
             });
         }
-        res.json(categories);
+        return res.json(categories);
     });
 };
 
@@ -148,7 +148,7 @@ exports.listBySearch = (req, res) => {
                     error: 'Products not found'
                 });
             }
-            res.json({
+            return res.json({
                 size: data.length,
                 data
             });
@@ -156,7 +156,7 @@ exports.listBySearch = (req, res) => {
 };
 
 exports.photo = (req, res) => {
-    res.json(req.product.photo.imageUrl);
+    return res.json(req.product.photo.imageUrl);
 };
 
 exports.listSearch = (req, res) => {
@@ -177,7 +177,7 @@ exports.listSearch = (req, res) => {
                     error: errorHandler(err)
                 });
             }
-            res.json(products);
+            return res.json(products);
         }).select('-photo');
     }
 };
