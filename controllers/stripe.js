@@ -8,6 +8,7 @@ exports.createCharge = (req, res) => {
           amount: req.body.amount * 100, //amount in cents
           currency: "usd",
           source: req.body.token.id,
+          description: "Testing data for ecommerce",
           receipt_email: req.body.token.email
         },
         (error, charges) => {
