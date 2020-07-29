@@ -5,7 +5,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 exports.createCharge = (req, res) => {
         stripe.charges.create({
-          amount: req.body.amount, //amount in cents
+          amount: req.body.amount * 100, //amount in cents
           currency: "usd",
           source: req.body.token.id,
           receipt_email: req.body.token.email
