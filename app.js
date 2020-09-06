@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
 const dotenv = require('dotenv');
 dotenv.config({ path: './config.env'});
 // import routes
@@ -15,6 +17,21 @@ const orderRoutes = require('./routes/order');
 
 // app
 const app = express();
+
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Ecommerce API',
+            version: '1.0.0'
+        },
+    },
+    // Path to the API DOCS
+    apis:['./routes/auth.js','./routes/category.js','./routes/order.js','./routes/product.js',
+    './routes/stripe.js','./routes/user.js']
+}
+
+const swaggerSpec = swaggerJSDoc(options);
 
 // db
 mongoose
@@ -38,7 +55,7 @@ app.use('/api', categoryRoutes);
 app.use('/api', productRoutes);
 app.use('/api', stripeRoutes);
 app.use('/api', orderRoutes);
-
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const port = process.env.PORT ;
 
 app.listen(port, () => {

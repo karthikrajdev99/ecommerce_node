@@ -1,22 +1,7 @@
 const User = require('../models/user');
 const { Order } = require('../models/order');
-const mongoose = require("mongoose");
 const { errorHandler } = require('../helpers/dbErrorHandler');
 
-// exports.userById = (req, res, next) => {
-
-//     const id = mongoose.Types.ObjectId(req.body._id);
-//     User.findById(id).exec((err, user) => {
-//         if (err || !user) {
-//             console.log(err)
-//             return res.status(400).json({
-//                 error: 'User not found'
-//             });
-//         }
-//         req.profile = user;
-//         next();
-//     });
-// };
 
 exports.read = (req, res) => {
     req.user.password = undefined;
@@ -54,7 +39,7 @@ exports.update = (req, res) => {
 
         user.save((err, updatedUser) => {
             if (err) {
-                console.log('USER UPDATE ERROR', err);
+
                 return res.status(400).json({
                     error: 'User update failed'
                 });

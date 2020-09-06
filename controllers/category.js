@@ -4,7 +4,7 @@ const { errorHandler } = require('../helpers/dbErrorHandler');
 
 exports.categoryById = (req, res, next) => {
     Category.findById(req.params.categoryId).exec((err, category) => {
-        // console.log(id);
+
         if (err || !category) {
             return res.status(400).json({
                 error: 'Category does not exist'
@@ -33,8 +33,6 @@ exports.read = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    console.log('req.body', req.body);
-    // console.log('category update param', req.params.categoryId);
 
     const category = req.category;
     category.name = req.body.name;
