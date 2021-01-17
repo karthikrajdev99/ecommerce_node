@@ -15,7 +15,7 @@ const { decreaseQuantity } = require("../controllers/product");
 
 /**
  * @swagger
- *  /api/order/create:
+ *  nodes/api/order/create:
  *   post:
  *     summary: order
  *     description: create order for ecommerce
@@ -48,7 +48,7 @@ router.post(
 
 /**
  * @swagger
- *  /api/order/list:
+ *  nodes/api/order/list:
  *   get:
  *     summary: orders
  *     description: listed orders of registered user
@@ -62,7 +62,7 @@ router.get("/order/list", auth, isAdmin, listOrders);
 
 /**
  * @swagger
- *  /api/order/status-values:
+ *  nodes/api/order/status-values:
  *   get:
  *     summary: orders status
  *     description: listed status of orders of registered user
@@ -81,7 +81,7 @@ router.get(
 
 /**
  * @swagger
- *  /api/order/:orderId/status:
+ *  nodes/api/order/:orderId/status:
  *   put:
  *     summary: orders
  *     description: update status of orders of registered user

@@ -6,7 +6,7 @@ const { createCharge } = require("../controllers/stripe");
 
 /**
  * @swagger
- *  /api/stripe/payment:
+ *  nodes/api/stripe/payment:
  *   post:
  *     summary: payments
  *     description: stripe payments integration

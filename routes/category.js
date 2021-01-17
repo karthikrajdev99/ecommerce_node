@@ -7,7 +7,7 @@ const { isAdmin } = require('../controllers/auth');
 
 /**
  * @swagger
- *  /api/category/:categoryId:
+ *  nodes/api/category/:categoryId:
  *   get:
  *     summary: category
  *     description: get category for ecommerce
@@ -21,7 +21,7 @@ const { isAdmin } = require('../controllers/auth');
 router.get('/category/:categoryId', read);
 /**
  * @swagger
- *  /api/category/create:
+ *  nodes/api/category/create:
  *   post:
  *     summary: category
  *     description: create category for ecommerce
@@ -42,7 +42,7 @@ router.post('/category/create', auth, isAdmin, create);
 
 /**
  * @swagger
- *  /api/category/:categoryId:
+ *  nodes/api/category/:categoryId:
  *   put:
  *     summary: category
  *     description: update category for ecommerce
@@ -63,7 +63,7 @@ router.put('/category/:categoryId', auth, isAdmin, update);
 
 /**
  * @swagger
- *  /api/category/:categoryId:
+ *  nodes/api/category/:categoryId:
  *   delete:
  *     summary: category
  *     description: delete category for ecommerce
@@ -84,7 +84,7 @@ router.delete('/category/:categoryId', auth, isAdmin, remove);
 
 /**
  * @swagger
- *  /api/categories:
+ *  nodes/api/categories:
  *   get:
  *     summary: category
  *     description: listed category for ecommerce

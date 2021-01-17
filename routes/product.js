@@ -17,7 +17,7 @@ const { isAdmin } = require("../controllers/auth");
 
 /**
  * @swagger
- *  /api/product/:productId:
+ *  nodes/api/product/:productId:
  *   get:
  *     summary: product
  *     description: get specific product for ecommerce
@@ -32,7 +32,7 @@ router.get("/product/:productId", read);
 
 /**
  * @swagger
- *  /api/product/create:
+ *  nodes/api/product/create:
  *   post:
  *     summary: product
  *     description: create product for ecommerce
@@ -65,7 +65,7 @@ router.route("/product/create").post(auth, isAdmin, create);
 
 /**
  * @swagger
- *  /api/product/:productId:
+ *  nodes/api/product/:productId:
  *   delete:
  *     summary: product
  *     description: delete product for ecommerce
@@ -84,7 +84,7 @@ router.delete(
 
 /**
  * @swagger
- *  /api/products:
+ *  nodes/api/products:
  *   get:
  *     summary: products
  *     description: listed products for ecommerce
@@ -99,7 +99,7 @@ router.get("/products", list);
 
 /**
  * @swagger
- *  /api/products/search:
+ *  nodes/api/products/search:
  *   get:
  *     summary: products
  *     description: listed products for ecommerce
@@ -113,7 +113,7 @@ router.get("/products/search", listSearch);
 
 /**
  * @swagger
- *  /api/products/related/:productId:
+ *  nodes/api/products/related/:productId:
  *   get:
  *     summary: product
  *     description: get related product for ecommerce
@@ -127,7 +127,7 @@ router.get("/products/related/:productId", listRelated);
 
 /**
  * @swagger
- *  /api/products/categories:
+ *  nodes/api/products/categories:
  *   get:
  *     summary: product categories
  *     description: listed product categories for ecommerce
@@ -142,7 +142,7 @@ router.post("/products/by/search", listBySearch);
 
 /**
  * @swagger
- *  /api/product/photo/:productId:
+ *  nodes/api/product/photo/:productId:
  *   get:
  *     summary: product photo
  *     description: get specific product photo for ecommerce

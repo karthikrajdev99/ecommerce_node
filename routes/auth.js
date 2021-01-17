@@ -10,7 +10,7 @@ const {
 
 /**
  * @swagger
- * /api/signup:
+ * nodes/api/signup:
  *   post:
  *     summary: register user
  *     description: register a new user
@@ -36,7 +36,7 @@ const {
 router.post("/signup", signup);
 /**
  * @swagger
- * /api/signin:
+ * nodes/api/signin:
  *   post:
  *     summary: login user
  *     description: logging in a registered user
@@ -59,7 +59,7 @@ router.post("/signup", signup);
 router.post("/signin", signin);
 /**
  * @swagger
- * /api/signout:
+ * nodes/api/signout:
  *   post:
  *     summary: logout user
  *     requestBody:
