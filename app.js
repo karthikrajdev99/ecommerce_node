@@ -6,6 +6,7 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 const dotenv = require("dotenv");
+const pino = require("pino");
 dotenv.config({ path: "./config.env" });
 // import routes
 const authRoutes = require("./routes/auth");
@@ -39,6 +40,12 @@ const options = {
   ],
 };
 
+const logger = pino({
+  level: 'info',
+  timestamp: () => `,"time":"${new Date().toISOString()}"`
+});
+
+
 const swaggerSpec = swaggerJSDoc(options);
 
 // db
@@ -49,7 +56,7 @@ mongoose
     useUnifiedTopology: true,
     useFindAndModify: false,
   })
-  .then(() => console.log("DB Connected"));
+  .then(() => logger.info("DB Connected"));
 
 // middlewares
 app.use(morgan("dev"));
@@ -66,6 +73,16 @@ app.use(PATH_PREFIX + "api", orderRoutes);
 app.use(PATH_PREFIX + "docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 const port = process.env.PORT;
 
+logger.info('hello elastic world');
+logger.info('This is some great stuff');
+logger.info('Some more entries for our logging');
+logger.info('another line');
+logger.info('This never stops');
+logger.info('Logging logging all the way');
+logger.info('I think this is enough');
+logger.info('nope, one more!');
+
+
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+  logger.info(`Server is running on port ${port}`);
 });
