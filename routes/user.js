@@ -5,7 +5,7 @@ const { read, update, purchaseHistory } = require('../controllers/user');
 
 /**
  * @swagger
- *  nodes/api/user:
+ *  /nodes/api/user:
  *   get:
  *     summary: user
  *     description: user details
@@ -20,7 +20,7 @@ router.get('/user', auth, read);
 
 /**
  * @swagger
- *  nodes/api/user:
+ *  /nodes/api/user:
  *   put:
  *     summary: category
  *     description: update category for ecommerce
@@ -47,7 +47,7 @@ router.put('/user', auth, update);
 
 /**
  * @swagger
- *  nodes/api/orders/by/user:
+ *  /nodes/api/orders/by/user:
  *   get:
  *     summary: purchase history
  *     description: purchase history of user
